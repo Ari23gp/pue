@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creando Juntos | Super Paco</title>
+  <style>
+    :root{
+      --kraft:#c7a784;
+      --kraft2:#d8bd97;
+      --cream:#fff8ec;
+      --paper:#fdf3e3;
+      --pink:#e77999;
+      --blue:#68bad0;
+      --yellow:#f4c650;
+      --purple:#9b75ce;
+      --ink:#253140;
+      --brown:#7c5b3c;
+      --shadow:0 18px 40px rgba(65, 43, 23, .22);
+      --radius:30px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Trebuchet MS", Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.16), transparent 22%),
+        radial-gradient(circle at 90% 30%, rgba(255,255,255,.14), transparent 20%),
+        linear-gradient(120deg, #b98f6c, #d8bd97);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px);
+      background-size:38px 38px;
+      mix-blend-mode:multiply;
+      pointer-events:none;
+      opacity:.38;
+      z-index:-2;
+    }
+
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        radial-gradient(circle at 12% 88%, rgba(232,121,153,.28), transparent 20%),
+        radial-gradient(circle at 90% 70%, rgba(104,186,208,.26), transparent 22%),
+        radial-gradient(circle at 15% 52%, rgba(244,198,80,.22), transparent 18%);
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    .nav{
+      position:sticky; top:0; z-index:99;
+      background:rgba(255,247,234,.86);
+      backdrop-filter:blur(14px);
+      border-bottom:2px dashed rgba(124,91,60,.25);
+    }
+    .nav-inner{
+      max-width:1180px; margin:auto;
+      padding:12px 22px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .sp-logo{width:154px; max-height:44px; object-fit:contain}
+    .nav a{
+      text-decoration:none; color:var(--ink); font-weight:900;
+      margin-left:18px; font-size:.95rem;
+    }
+
+    .btn{
+      border:0; cursor:pointer; text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:13px 20px; border-radius:999px;
+      background:var(--pink); color:white; font-weight:900;
+      box-shadow:0 7px 0 rgba(124, 58, 78, .32);
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-3px)}
+    .btn.secondary{background:var(--blue); box-shadow:0 7px 0 rgba(46,100,111,.32)}
+    .btn.yellow{background:var(--yellow); color:var(--ink); box-shadow:0 7px 0 rgba(143,103,20,.32)}
+    .btn.full{width:100%}
+
+    .hero{
+      min-height:88vh;
+      display:grid; place-items:center;
+      padding:70px 22px 45px;
+      position:relative;
+    }
+    .hero-card{
+      max-width:1180px; width:100%;
+      border-radius:44px;
+      padding:54px;
+      box-shadow:var(--shadow);
+      background:rgba(255,247,234,.32);
+      border:3px solid rgba(255,255,255,.35);
+      position:relative; overflow:hidden;
+    }
+    .hero-grid{
+      display:grid; grid-template-columns:1.08fr .92fr; gap:34px; align-items:center;
+      position:relative;
+    }
+    .logo-camp{
+      width:min(820px,100%);
+      display:block;
+      filter:drop-shadow(0 7px 0 rgba(0,0,0,.06));
+      margin-top:8px;
+    }
+    .tagline{
+      margin:22px 0;
+      display:inline-block;
+      font-size:1.55rem;
+      font-weight:900;
+      background:rgba(255,255,255,.52);
+      padding:13px 19px;
+      border-radius:20px;
+      color:#161f29;
+    }
+    .lead{
+      font-size:1.13rem;
+      line-height:1.6;
+      font-weight:800;
+      max-width:760px;
+      background:rgba(255,247,234,.64);
+      padding:18px;
+      border-radius:22px;
+    }
+
+    /* Hero card like your reference image 1 */
+    .hero-visual{
+      min-height:420px;
+      background:var(--cream);
+      border-radius:34px;
+      padding:30px 24px;
+      box-shadow:var(--shadow);
+      border:5px solid rgba(255,255,255,.76);
+      transform:rotate(1.5deg);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+    }
+    .hero-visual::before{
+      content:"";
+      position:absolute;
+      right:-70px;
+      bottom:-70px;
+      width:210px;
+      height:210px;
+      border-radius:50%;
+      background:rgba(104,186,208,.25);
+    }
+    .hero-visual::after{
+      content:"★";
+      position:absolute;
+      top:14px;
+      right:42px;
+      color:var(--pink);
+      font-size:3rem;
+      transform:rotate(12deg);
+    }
+    .faces{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px 24px;
+      font-size:5.4rem;
+      line-height:1;
+      margin-bottom:20px;
+      position:relative;
+      z-index:1;
+    }
+    .face-card-doodles{
+      position:relative;
+      z-index:1;
+      color:var(--pink);
+      font-size:2rem;
+      letter-spacing:12px;
+      margin-bottom:12px;
+    }
+    .note{
+      position:relative;
+      z-index:1;
+      font-weight:900;
+      font-size:1.45rem;
+      max-width:330px;
+      line-height:1.15;
+    }
+
+    .section{
+      max-width:1180px; margin:auto;
+      padding:70px 22px;
+    }
+    .section h2{
+      font-family:"Comic Sans MS","Trebuchet MS",cursive;
+      font-size:clamp(2.15rem,5vw,4rem);
+      color:white;
+      text-transform:uppercase;
+      margin-bottom:16px;
+      line-height:.95;
+      text-shadow:2px 3px 0 rgba(0,0,0,.08);
+    }
+
+    /* Kit cards like screenshot 3, using the kit images instead of emojis */
+    .kits{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:24px;
+      margin-top:34px;
+    }
+    .kit-card{
+      background:var(--cream);
+      border-radius:32px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      border:4px solid rgba(255,255,255,.72);
+      transition:.25s ease;
+      position:relative;
+      overflow:hidden;
+      min-height:585px;
+      display:flex;
+      flex-direction:column;
+    }
+    .kit-card:hover{transform:translateY(-8px) rotate(-1deg)}
+    .kit-card:nth-child(2):hover{transform:translateY(-8px) rotate(1deg)}
+
+    .kit-pill{
+      display:inline-block;
+      color:white;
+      font-weight:900;
+      padding:9px 18px;
+      border-radius:999px;
+      margin-bottom:16px;
+      align-self:flex-start;
+      font-size:1.05rem;
+    }
+    .kit-card:nth-child(1) .kit-pill{background:var(--blue)}
+    .kit-card:nth-child(2) .kit-pill{background:var(--pink)}
+    .kit-card:nth-child(3) .kit-pill{background:var(--purple)}
+    .kit-card:nth-child(4) .kit-pill{background:var(--yellow); color:var(--ink)}
+
+    .kit-title-img{
+      width:100%;
+      height:78px;
+      object-fit:contain;
+      object-position:left center;
+      margin:0 0 18px;
+      mix-blend-mode:multiply;
+      filter:contrast(1.15);
+    }
+
+    .kit-box{
+      width:100%;
+      height:165px;
+      object-fit:contain;
+      display:block;
+      margin:4px auto 18px;
+      filter:drop-shadow(0 12px 12px rgba(0,0,0,.18));
+      transition:.25s ease;
+    }
+    .kit-card:hover .kit-box{transform:scale(1.04) rotate(1deg)}
+
+    .objective{
+      font-size:.91rem;
+      line-height:1.4;
+      background:#fff;
+      padding:12px;
+      border-radius:16px;
+      min-height:88px;
+      font-weight:800;
+    }
+    .price{
+      font-size:1.8rem;
+      font-weight:900;
+      margin:16px 0 10px;
+    }
+    .includes{
+      font-size:.87rem;
+      line-height:1.55;
+      margin-top:12px;
+      font-weight:700;
+    }
+    .includes li{margin-left:18px}
+    .mini{font-size:.78rem; color:#735840; font-weight:800; margin-top:8px}
+
+    .calendar-wrap{
+      display:grid; grid-template-columns:1fr 1fr; gap:25px; margin-top:30px;
+    }
+    .panel{
+      background:rgba(255,247,234,.76);
+      border-radius:var(--radius);
+      padding:26px;
+      box-shadow:var(--shadow);
+      border:3px solid rgba(255,255,255,.45);
+    }
+    .panel h3{font-size:1.75rem; margin-bottom:12px}
+    .event{
+      background:#fff;
+      border-radius:18px;
+      padding:16px;
+      margin:13px 0;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+      border-left:8px solid var(--pink);
+    }
+    .event:nth-child(3){border-color:var(--blue)}
+    .event:nth-child(4){border-color:var(--yellow)}
+    .event b{display:block;font-size:1.05rem}
+    .event span{font-size:.9rem;color:#6b5039;font-weight:700}
+    .spots{font-weight:900;color:var(--pink);white-space:nowrap}
+
+    form{display:grid; gap:12px; margin-top:16px}
+    input,select,textarea{
+      width:100%;
+      padding:14px 15px;
+      border-radius:16px;
+      border:2px solid rgba(124,91,60,.25);
+      background:#fff;
+      font:inherit;
+      font-weight:800;
+    }
+    textarea{min-height:84px; resize:vertical}
+
+    .how{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:30px;
+    }
+    .step{
+      background:var(--cream);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+    .num{
+      font-size:2rem;font-weight:900;color:#fff;background:var(--pink);
+      width:54px;height:54px;border-radius:50%;display:grid;place-items:center;margin-bottom:12px;
+    }
+    .step:nth-child(2) .num{background:var(--blue)}
+    .step:nth-child(3) .num{background:var(--yellow);color:var(--ink)}
+    .step p{font-weight:800;line-height:1.45}
+
+    .faq details{
+      background:#fff;
+      border-radius:16px;
+      padding:16px;
+      margin:12px 0;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .faq p{
+      font-weight:700;
+      line-height:1.5;
+      margin-top:10px;
+      color:#5f4632;
+    }
+
+    .testimonial-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:22px;
+    }
+    .quote{
+      background:#fff;
+      border-radius:22px;
+      padding:20px;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+      font-weight:800;
+      line-height:1.5;
+    }
+    .quote b{display:block;margin-top:14px;color:var(--pink)}
+
+    footer{
+      text-align:center;
+      padding:38px 22px;
+      background:rgba(255,247,234,.66);
+      font-weight:900;
+    }
+    footer img{width:260px;max-width:80%;display:block;margin:0 auto 12px}
+
+    .toast{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      background:var(--ink);
+      color:white;
+      padding:16px 20px;
+      border-radius:18px;
+      font-weight:900;
+      box-shadow:var(--shadow);
+      transform:translateY(120px);
+      transition:.25s ease;
+      z-index:999;
+    }
+    .toast.show{transform:translateY(0)}
+
+    @media(max-width:1080px){
+      .kits{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:980px){
+      .hero-grid,.calendar-wrap{grid-template-columns:1fr}
+      .how,.testimonial-grid{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .hero-card{padding:34px 22px}
+      .logo-camp{width:min(740px,100%)}
+      .faces{font-size:4.7rem}
+    }
+    @media(max-width:590px){
+      .kits{grid-template-columns:1fr}
+      .tagline{font-size:1.2rem}
+      .hero-visual{min-height:360px}
+      .faces{font-size:4rem}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <img class="sp-logo" src="superpaco-logo.svg" alt="Super Paco">
+      <div class="nav-links">
+        <a href="#kits">Kits</a>
+        <a href="#talleres">Talleres</a>
+        <a href="#reserva">Reserva</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-card">
+      <div class="hero-grid">
+        <div>
+          <img class="sp-logo" src="superpaco-logo.svg" alt="Super Paco" style="width:210px;margin-bottom:12px">
+          <img class="logo-camp" src="creando-juntos-logo.png" alt="Creando Juntos">
+          <p class="tagline">La creatividad no tiene edad</p>
+          <p class="lead">
+            Una sección especial dentro del sitio de Super Paco para conocer los kits,
+            comprarlos y reservar los Encuentros Creamos Juntos.
+          </p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+            <a class="btn" href="#kits">Ver kits</a>
+            <a class="btn secondary" href="#reserva">Reservar cupo</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="faces" aria-hidden="true">
+            <span>👴🏻</span><span>👩🏻</span>
+            <span>👦🏻</span><span>👵🏻</span>
+          </div>
+          <div class="face-card-doodles">✦ ♡ ✿ ★</div>
+          <p class="note">Crear juntos también es una forma de cuidar.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="kits">
+      <h2>Kits Creamos Juntos</h2>
+      <p class="lead">
+        Cada kit incluye materiales, presentación personalizada y acceso al Encuentro Creamos Juntos.
+        El objetivo de la landing es convertir el interés generado en redes sociales en compra y reserva concreta.
+      </p>
+
+      <div class="kits">
+        <article class="kit-card">
+          <span class="kit-pill">Kit 1</span>
+          <img class="kit-title-img" src="title-kit-1.png" alt="Mi Primer Cuadro">
+          <img class="kit-box" src="box-kit-1.png" alt="Kit 1 Mi Primer Cuadro">
+          <p class="objective">Estimula la motricidad fina, la creatividad y la confianza a través de la pintura compartida.</p>
+          <p class="price">$29,99</p>
+          <button class="btn yellow full buy" data-kit="Mi Primer Cuadro">Comprar / reservar</button>
+          <ul class="includes">
+            <li>2 lienzos redondos numerados</li>
+            <li>2 sets de témperas x12</li>
+            <li>2 delantales exclusivos</li>
+          </ul>
+          <p class="mini">Incluye guía con QR de reserva.</p>
+        </article>
+
+        <article class="kit-card">
+          <span class="kit-pill">Kit 2</span>
+          <img class="kit-title-img" src="title-kit-2.png" alt="Hogar con Historia">
+          <img class="kit-box" src="box-kit-2.png" alt="Kit 2 Hogar con Historia">
+          <p class="objective">Favorece la estimulación sensorial y cognitiva mediante una experiencia creativa en familia.</p>
+          <p class="price">$31,99</p>
+          <button class="btn yellow full buy" data-kit="Hogar con Historia">Comprar / reservar</button>
+          <ul class="includes">
+            <li>Pasta para moldear 500 g</li>
+            <li>Témperas, pinceles y modeladores</li>
+            <li>2 delantales exclusivos</li>
+          </ul>
+          <p class="mini">Ideal para crear algo para el hogar.</p>
+        </article>
+
+        <article class="kit-card">
+          <span class="kit-pill">Kit 3</span>
+          <img class="kit-title-img" src="title-kit-3.png" alt="Recuerdos en Madera">
+          <img class="kit-box" src="box-kit-3.png" alt="Kit 3 Recuerdos en Madera">
+          <p class="objective">Fortalece la memoria emocional y el sentido de pertenencia creando un recuerdo para el hogar.</p>
+          <p class="price">$46,99</p>
+          <button class="btn yellow full buy" data-kit="Recuerdos en Madera">Comprar / reservar</button>
+          <ul class="includes">
+            <li>Bandeja mediana de madera</li>
+            <li>Marcadores acrílicos</li>
+            <li>2 delantales exclusivos</li>
+          </ul>
+          <p class="mini">Proyecto decorativo funcional.</p>
+        </article>
+
+        <article class="kit-card">
+          <span class="kit-pill">Kit 4</span>
+          <img class="kit-title-img" src="title-kit-4.png" alt="Nuestra Obra">
+          <img class="kit-box" src="box-kit-4.png" alt="Kit 4 Nuestra Obra">
+          <p class="objective">Refuerza el vínculo intergeneracional y el bienestar emocional mediante una obra única en conjunto.</p>
+          <p class="price">$46,99</p>
+          <button class="btn yellow full buy" data-kit="Nuestra Obra">Comprar / reservar</button>
+          <ul class="includes">
+            <li>2 frascos de vidrio con tapa</li>
+            <li>Acrílicos, plantillas y tape</li>
+            <li>2 delantales exclusivos</li>
+          </ul>
+          <p class="mini">Kit creativo premium.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="talleres">
+      <h2>Calendario de talleres</h2>
+      <p class="lead">
+        Los Encuentros Creamos Juntos se realizarán en el Instituto de Neurociencias,
+        ubicado en la Av. Pedro Menéndez Gilbert, Guayaquil.
+      </p>
+
+      <div class="calendar-wrap">
+        <div class="panel">
+          <h3>Próximos Encuentros</h3>
+          <div class="event">
+            <div><b>Mi Primer Cuadro</b><span>Sábado 13 · 11h00 · Instituto de Neurociencias</span></div>
+            <div class="spots">8 cupos</div>
+          </div>
+          <div class="event">
+            <div><b>Hogar con Historia</b><span>Domingo 14 · 16h00 · Instituto de Neurociencias</span></div>
+            <div class="spots">12 cupos</div>
+          </div>
+          <div class="event">
+            <div><b>Nuestra Obra</b><span>Sábado 20 · 11h00 · Instituto de Neurociencias</span></div>
+            <div class="spots">6 cupos</div>
+          </div>
+        </div>
+
+        <div class="panel" id="reserva">
+          <h3>Reserva tu cupo</h3>
+          <form id="bookingForm">
+            <input required placeholder="Nombre y apellido" />
+            <input required type="email" placeholder="Correo electrónico" />
+            <input required type="tel" placeholder="Número de teléfono" />
+            <input required placeholder="Código del producto" />
+            <select required id="kitSelect">
+              <option value="">Seleccionar kit</option>
+              <option>Mi Primer Cuadro</option>
+              <option>Hogar con Historia</option>
+              <option>Recuerdos en Madera</option>
+              <option>Nuestra Obra</option>
+            </select>
+            <select required>
+              <option value="">Elegir horario</option>
+              <option>Sábado 13 · 11h00</option>
+              <option>Domingo 14 · 16h00</option>
+              <option>Sábado 20 · 11h00</option>
+            </select>
+            <textarea placeholder="¿Con quién asistirás al Encuentro Creamos Juntos?"></textarea>
+            <button class="btn full" type="submit">Reservar cupo</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>¿Cómo funciona?</h2>
+      <div class="how">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Elige tu kit</h3>
+          <p>Compra el proyecto creativo que más conecte con tu familia.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Reserva tu cupo</h3>
+          <p>Ingresa tus datos, el código del producto y selecciona el horario disponible.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Crea y comparte</h3>
+          <p>Asiste al Instituto de Neurociencias y vive una experiencia creativa intergeneracional.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <h2>FAQ</h2>
+      <div class="panel faq">
+        <details open>
+          <summary>¿El taller tiene costo adicional?</summary>
+          <p>No. La experiencia está incluida dentro del precio del kit y permite reservar cupo para dos personas.</p>
+        </details>
+        <details>
+          <summary>¿Dónde se realizan los encuentros?</summary>
+          <p>En el Instituto de Neurociencias, en la Av. Pedro Menéndez Gilbert, Guayaquil.</p>
+        </details>
+        <details>
+          <summary>¿Quién puede asistir?</summary>
+          <p>Está pensado para adultos mayores junto a hijos, nietos, familiares o cuidadores.</p>
+        </details>
+        <details>
+          <summary>¿Necesito saber pintar o hacer manualidades?</summary>
+          <p>No. Cada kit incluye una guía sencilla y el encuentro tiene acompañamiento paso a paso.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Testimonios</h2>
+      <p class="lead">Historias de familias que crean juntas.</p>
+      <div class="testimonial-grid">
+        <div class="quote">“No pensé que pintar con mi nieto me iba a emocionar tanto. Ahora el cuadro está en mi sala.”<b>— Mercedes, 68 años</b></div>
+        <div class="quote">“Compré el kit como regalo, pero terminó siendo una tarde completa con mi papá.”<b>— Andrés, 34 años</b></div>
+        <div class="quote">“La guía fue fácil y el taller hizo que mi abuelita se sintiera segura creando.”<b>— Camila, 22 años</b></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <img src="creando-juntos-logo.png" alt="Creando Juntos">
+    <p>La creatividad no tiene edad · Crear juntos también es una forma de cuidar.</p>
+  </footer>
+
+  <div class="toast" id="toast">Reserva enviada ✨</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    const form = document.getElementById("bookingForm");
+    const kitSelect = document.getElementById("kitSelect");
+
+    document.querySelectorAll(".buy").forEach(btn => {
+      btn.addEventListener("click", () => {
+        kitSelect.value = btn.dataset.kit;
+        document.querySelector("#reserva").scrollIntoView({behavior:"smooth"});
+      });
+    });
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2600);
+      form.reset();
+    });
+
+    document.querySelectorAll(".kit-card").forEach(card => {
+      card.addEventListener("mousemove", e => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        card.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff 0, #fff8ec 42%, #fff1dd 100%)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.background = "var(--cream)";
+      });
+    });
+  </script>
+</body>
+</html>
